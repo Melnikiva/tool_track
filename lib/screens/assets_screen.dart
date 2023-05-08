@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tool_track/features/navbar.dart';
+import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';
 
 class AssetsScreen extends StatelessWidget {

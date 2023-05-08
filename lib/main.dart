@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tool_track/screens/account_screen.dart';
+import 'package:tool_track/screens/info_screen.dart';
 import 'package:tool_track/screens/login_screen.dart';
 import 'package:tool_track/screens/assets_screen.dart';
+import 'package:tool_track/screens/settings_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,11 +15,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
+      initialRoute: '/assets',
       routes: {
-        '/': (context) => LoginScreen(),
+        '/login': (context) => LoginScreen(),
         '/assets': (context) => AssetsScreen(),
         '/account': (context) => AccountScreen(),
+        '/settings': (context) => SettingsScreen(),
+        '/info': (context) => InfoScreen(),
       },
     );
   }

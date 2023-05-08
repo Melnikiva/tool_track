@@ -1,4 +1,5 @@
 enum Pages {
+  login,
   account,
   assets,
   settings,
@@ -6,8 +7,9 @@ enum Pages {
 }
 
 Map<Pages, String> pageRoutes = {
+  Pages.login: '/',
+  Pages.assets: '/assets',
   Pages.account: '/account',
-  Pages.assets: '/',
   Pages.settings: '/settings',
   Pages.info: '/info'
 };
