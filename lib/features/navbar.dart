@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tool_track/account_manager.dart';
 import 'package:tool_track/pages.dart';
 
-class NavBar extends StatefulWidget {
+class NavBar extends StatelessWidget {
   final AccountManager accountManager = AccountManager();
   Pages currentPage;
 
@@ -12,13 +12,8 @@ class NavBar extends StatefulWidget {
 
   NavBar({required this.currentPage});
 
-  @override
-  State<NavBar> createState() => _NavBarState();
-}
-
-class _NavBarState extends State<NavBar> {
   bool isSelected(Pages page) {
-    return page == widget.currentPage;
+    return page == currentPage;
   }
 
   @override
@@ -29,10 +24,10 @@ class _NavBarState extends State<NavBar> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-              widget.accountManager.getName(),
+              accountManager.getName(),
             ),
             accountEmail: Text(
-              widget.accountManager.getEmail(),
+              accountManager.getEmail(),
             ),
             currentAccountPicture: Icon(
               Icons.handyman_rounded,
@@ -44,44 +39,24 @@ class _NavBarState extends State<NavBar> {
             icon: Icons.account_circle_rounded,
             pageLink: Pages.account,
             selected: isSelected(Pages.account),
-            onTap: () {
-              setState(() {
-                widget.changeCurrentPage(Pages.account);
-              });
-            },
           ),
           DrawerListItem(
             title: 'Assets',
             icon: Icons.handyman_rounded,
             pageLink: Pages.assets,
             selected: isSelected(Pages.assets),
-            onTap: () {
-              setState(() {
-                widget.changeCurrentPage(Pages.assets);
-              });
-            },
           ),
           DrawerListItem(
             title: 'Settings',
             icon: Icons.settings,
             pageLink: Pages.settings,
             selected: isSelected(Pages.settings),
-            onTap: () {
-              setState(() {
-                widget.changeCurrentPage(Pages.settings);
-              });
-            },
           ),
           DrawerListItem(
             title: 'Info',
             icon: Icons.info,
             pageLink: Pages.info,
             selected: isSelected(Pages.info),
-            onTap: () {
-              setState(() {
-                widget.changeCurrentPage(Pages.info);
-              });
-            },
           ),
         ],
       ),
@@ -92,14 +67,13 @@ class _NavBarState extends State<NavBar> {
 class DrawerListItem extends StatelessWidget {
   final String title;
   final IconData icon;
-  final Function onTap;
+
   final Pages pageLink;
   bool selected;
 
   DrawerListItem({
     required this.title,
     required this.icon,
-    required this.onTap,
     required this.pageLink,
     this.selected = false,
   });
@@ -115,7 +89,6 @@ class DrawerListItem extends StatelessWidget {
       leading: Icon(this.icon),
       title: Text(this.title),
       onTap: () {
-        this.onTap();
         Navigator.pushNamed(context, pageRoutes[pageLink]!);
         closeDrawer(context);
       },
