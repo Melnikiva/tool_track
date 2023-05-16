@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tool_track/account_manager.dart';
 import 'package:tool_track/pages.dart';
@@ -43,7 +42,7 @@ class _NavBarState extends State<NavBar> {
           DrawerListItem(
             title: 'Account',
             icon: Icons.account_circle_rounded,
-            pageLink: Pages.account,
+            pageRoute: Pages.account,
             selected: isSelected(Pages.account),
             onTap: () {
               setState(() {
@@ -54,7 +53,7 @@ class _NavBarState extends State<NavBar> {
           DrawerListItem(
             title: 'Assets',
             icon: Icons.handyman_rounded,
-            pageLink: Pages.assets,
+            pageRoute: Pages.assets,
             selected: isSelected(Pages.assets),
             onTap: () {
               setState(() {
@@ -65,7 +64,7 @@ class _NavBarState extends State<NavBar> {
           DrawerListItem(
             title: 'Settings',
             icon: Icons.settings,
-            pageLink: Pages.settings,
+            pageRoute: Pages.settings,
             selected: isSelected(Pages.settings),
             onTap: () {
               setState(() {
@@ -76,7 +75,7 @@ class _NavBarState extends State<NavBar> {
           DrawerListItem(
             title: 'Info',
             icon: Icons.info,
-            pageLink: Pages.info,
+            pageRoute: Pages.info,
             selected: isSelected(Pages.info),
             onTap: () {
               setState(() {
@@ -94,19 +93,19 @@ class DrawerListItem extends StatelessWidget {
   final String title;
   final IconData icon;
   final Function onTap;
-  final Pages pageLink;
+  final Pages pageRoute;
   bool selected;
 
   DrawerListItem({
     required this.title,
     required this.icon,
     required this.onTap,
-    required this.pageLink,
+    required this.pageRoute,
     this.selected = false,
   });
 
   void goToPage(BuildContext context) {
-    Navigator.pushReplacementNamed(context, pageRoutes[pageLink]!);
+    Navigator.pushReplacementNamed(context, pageRoutes[pageRoute]!);
   }
 
   @override
