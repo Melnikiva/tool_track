@@ -3,6 +3,7 @@ import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';
 
 class AccountScreen extends StatelessWidget {
+  static const route = 'account';
   const AccountScreen({super.key});
 
   @override

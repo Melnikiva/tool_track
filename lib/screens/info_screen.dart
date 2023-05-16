@@ -3,6 +3,7 @@ import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';
 
 class InfoScreen extends StatelessWidget {
+  static const route = 'info';
   const InfoScreen({super.key});
 
   @override

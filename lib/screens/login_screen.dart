@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const double kFormElemetsGap = 16.0;
 
 class LoginScreen extends StatelessWidget {
+  static const route = 'login';
   const LoginScreen({super.key});
 
   @override

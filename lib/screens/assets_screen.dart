@@ -3,6 +3,7 @@ import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';
 
 class AssetsScreen extends StatelessWidget {
+  static const route = 'assets';
   const AssetsScreen({super.key});
 
   @override

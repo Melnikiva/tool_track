@@ -3,6 +3,7 @@ import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';
 
 class SettingsScreen extends StatelessWidget {
+  static const route = 'settings';
   const SettingsScreen({super.key});
 
   @override

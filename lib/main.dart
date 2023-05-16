@@ -15,13 +15,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/assets',
+      initialRoute: LoginScreen.route,
       routes: {
-        '/login': (context) => LoginScreen(),
-        '/assets': (context) => AssetsScreen(),
-        '/account': (context) => AccountScreen(),
-        '/settings': (context) => SettingsScreen(),
-        '/info': (context) => InfoScreen(),
+        LoginScreen.route: (context) => LoginScreen(),
+        AssetsScreen.route: (context) => AssetsScreen(),
+        AccountScreen.route: (context) => AccountScreen(),
+        SettingsScreen.route: (context) => SettingsScreen(),
+        InfoScreen.route: (context) => InfoScreen(),
       },
     );
   }
