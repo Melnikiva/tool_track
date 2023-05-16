@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/account_screen.dart';
 import 'package:tool_track/screens/info_screen.dart';
 import 'package:tool_track/screens/login_screen.dart';
@@ -15,6 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: kAppTheme,
       initialRoute: LoginScreen.route,
       routes: {
         LoginScreen.route: (context) => LoginScreen(),
