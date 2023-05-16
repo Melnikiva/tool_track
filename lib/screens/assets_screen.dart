@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';

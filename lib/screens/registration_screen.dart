@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:tool_track/account_manager.dart';
+import 'package:tool_track/managers/account_manager.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/assets_screen.dart';
 import 'package:tool_track/components/rect_button.dart';
