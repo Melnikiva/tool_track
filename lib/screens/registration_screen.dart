@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tool_track/components/rect_button.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/assets_screen.dart';
-import 'package:tool_track/screens/registration_screen.dart';
+import 'package:tool_track/components/rect_button.dart';
 
 const double kFormElemetsGap = 16.0;
 
-class LoginScreen extends StatelessWidget {
-  static const route = 'login';
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatelessWidget {
+  static const route = 'registration';
+  const RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +20,23 @@ class LoginScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 62.0),
               child: Icon(
-                kMainIcon,
+                Icons.person_add_alt_1,
                 size: 250.0,
                 color: kPrimaryDarkColor,
               ),
             ),
-            LoginForm(),
+            RegistrationForm(),
           ]),
         ),
       ),
       appBar: AppBar(
-        title: Text('Tool Track'),
+        title: Text('Registration'),
       ),
     );
   }
 }
 
-class LoginForm extends StatelessWidget {
+class RegistrationForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -49,14 +49,28 @@ class LoginForm extends StatelessWidget {
           TextFormField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
+              labelText: 'Full Name',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your details';
+              }
+              return null;
+            },
+          ),
+          SizedBox(
+            height: kFormElemetsGap,
+          ),
+          TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
               labelText: 'Email',
             ),
             validator: (value) {
-              // TODO: Email validation
-              if (value == null || value.isEmpty) {
-                return 'Please enter email';
+              if (value != null && kEmailValidation.hasMatch(value)) {
+                return null;
               }
-              return null;
+              return 'Please enter valid email';
             },
           ),
           SizedBox(
@@ -82,25 +96,16 @@ class LoginForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               RectButton(
-                text: 'Login',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // TODO: Login here
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Logging in...')),
-                    );
-                    Navigator.pushNamed(context, AssetsScreen.route);
-                  }
-                },
-                color: kSecondaryColor,
-              ),
-              SizedBox(
-                height: 16.0,
-              ),
-              RectButton(
                 text: 'Register',
                 onPressed: () {
-                  Navigator.pushNamed(context, RegistrationScreen.route);
+                  if (_formKey.currentState!.validate()) {
+                    // TODO: Register here
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Registering...')),
+                    );
+                    EasyLoading.show();
+                    Navigator.pushNamed(context, AssetsScreen.route);
+                  }
                 },
               ),
             ],
