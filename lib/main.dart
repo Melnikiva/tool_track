@@ -6,7 +6,14 @@ import 'package:tool_track/screens/login_screen.dart';
 import 'package:tool_track/screens/assets_screen.dart';
 import 'package:tool_track/screens/settings_screen.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -16,7 +23,12 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: kAppTheme,
+      theme: ThemeData.light().copyWith(
+        colorScheme: ColorScheme.light().copyWith(
+          primary: kPrimaryColor,
+          secondary: kSecondaryColor,
+        ),
+      ),
       initialRoute: LoginScreen.route,
       routes: {
         LoginScreen.route: (context) => LoginScreen(),

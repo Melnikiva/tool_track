@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tool_track/account_manager.dart';
+import 'package:tool_track/constants.dart';
 import 'package:tool_track/pages.dart';
 
 class NavBar extends StatefulWidget {
@@ -24,8 +25,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      child: Column(
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
@@ -35,8 +35,9 @@ class _NavBarState extends State<NavBar> {
               widget.accountManager.getEmail(),
             ),
             currentAccountPicture: Icon(
-              Icons.handyman_rounded,
+              kMainIcon,
               size: 60.0,
+              color: Colors.white,
             ),
           ),
           DrawerListItem(
@@ -82,6 +83,23 @@ class _NavBarState extends State<NavBar> {
                 widget.changeCurrentPage(Pages.info);
               });
             },
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: DrawerListItem(
+              title: 'Log Out',
+              icon: Icons.logout,
+              pageRoute: Pages.info,
+              selected: isSelected(Pages.info),
+              onTap: () {
+                setState(() {
+                  widget.changeCurrentPage(Pages.info);
+                });
+              },
+            ),
           ),
         ],
       ),

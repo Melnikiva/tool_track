@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "630378153455",
+    "project_id": "tool-track-f3079",
+    "storage_bucket": "tool-track-f3079.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630378153455:android:84aabd6bc89ba256baa21a",
+        "android_client_info": {
+          "package_name": "com.example.tool_track"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630378153455-am93jbrocbu497i7ed03ls6rd7ajfivh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYmg4pOOS9f5G9MWb4qKkO-CWXodi_YBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630378153455-am93jbrocbu497i7ed03ls6rd7ajfivh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "630378153455-0lfcducl5rfbimhg29ah2mf07psttq49.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.toolTrack"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -18,8 +18,9 @@ class LoginScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 62.0),
               child: Icon(
-                Icons.handyman_rounded,
+                kMainIcon,
                 size: 250.0,
+                color: kPrimaryDarkColor,
               ),
             ),
             LoginForm(),
