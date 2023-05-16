@@ -8,11 +8,14 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Account'),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Account'),
+        ),
+        drawer: NavBar(currentPage: Pages.account),
       ),
-      drawer: NavBar(currentPage: Pages.account),
     );
   }
 }

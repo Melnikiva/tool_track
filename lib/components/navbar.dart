@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tool_track/account_manager.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/pages.dart';
+import 'package:tool_track/screens/login_screen.dart';
 
 class NavBar extends StatefulWidget {
   final AccountManager accountManager = AccountManager();
@@ -29,7 +30,7 @@ class _NavBarState extends State<NavBar> {
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-              widget.accountManager.getName(),
+              widget.accountManager.getFullName(),
             ),
             accountEmail: Text(
               widget.accountManager.getEmail(),
@@ -89,15 +90,15 @@ class _NavBarState extends State<NavBar> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: DrawerListItem(
-              title: 'Log Out',
-              icon: Icons.logout,
-              pageRoute: Pages.info,
-              selected: isSelected(Pages.info),
+            child: ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Log Out'),
               onTap: () {
-                setState(() {
-                  widget.changeCurrentPage(Pages.info);
-                });
+                widget.accountManager.signOut();
+                Navigator.popUntil(
+                  context,
+                  ModalRoute.withName(LoginScreen.route),
+                );
               },
             ),
           ),
@@ -112,7 +113,7 @@ class DrawerListItem extends StatelessWidget {
   final IconData icon;
   final Function onTap;
   final Pages pageRoute;
-  bool selected;
+  final bool selected;
 
   DrawerListItem({
     required this.title,

@@ -1,12 +1,46 @@
-class AccountManager {
-  String _accountName = 'Іван Мельник';
-  String _accountEmail = 'ivanmel.vn23@gmail.com';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-  getName() {
-    return _accountName;
+class AccountManager {
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  String getFullName() {
+    return _auth.currentUser != null
+        ? _auth.currentUser!.displayName!
+        : 'Unknown';
   }
 
-  getEmail() {
-    return _accountEmail;
+  String getEmail() {
+    return _auth.currentUser != null ? _auth.currentUser!.email! : 'Unknown';
+  }
+
+  void signOut() async {
+    await _auth.signOut();
+  }
+
+  Future login({
+    String email = '',
+    String password = '',
+  }) {
+    return _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  Future register({
+    String email = '',
+    String password = '',
+    String fullname = '',
+  }) {
+    return _auth
+        .createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    )
+        .then((currentUser) {
+      currentUser.user?.updateDisplayName(fullname);
+    });
   }
 }
