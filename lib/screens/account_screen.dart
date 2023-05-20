@@ -14,7 +14,7 @@ class AccountScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Account'),
         ),
-        drawer: NavBar(currentPage: Pages.account),
+        drawer: NavBar(initialPage: Pages.account),
       ),
     );
   }

@@ -6,21 +6,32 @@ import 'package:tool_track/screens/login_screen.dart';
 
 class NavBar extends StatefulWidget {
   final AccountManager accountManager = AccountManager();
-  Pages currentPage;
+  final Pages initialPage;
 
-  void changeCurrentPage(Pages newPage) {
-    currentPage = newPage;
-  }
-
-  NavBar({required this.currentPage});
+  NavBar({required this.initialPage});
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
+  late Pages currentPage;
+
+  void changeCurrentPage(Pages newPage) {
+    setState(() {
+      currentPage = newPage;
+    });
+  }
+
   bool isSelected(Pages page) {
-    return page == widget.currentPage;
+    return page == currentPage;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    currentPage = widget.initialPage;
   }
 
   @override
@@ -48,7 +59,7 @@ class _NavBarState extends State<NavBar> {
             selected: isSelected(Pages.account),
             onTap: () {
               setState(() {
-                widget.changeCurrentPage(Pages.account);
+                changeCurrentPage(Pages.account);
               });
             },
           ),
@@ -59,7 +70,7 @@ class _NavBarState extends State<NavBar> {
             selected: isSelected(Pages.assets),
             onTap: () {
               setState(() {
-                widget.changeCurrentPage(Pages.assets);
+                changeCurrentPage(Pages.assets);
               });
             },
           ),
@@ -70,7 +81,7 @@ class _NavBarState extends State<NavBar> {
             selected: isSelected(Pages.settings),
             onTap: () {
               setState(() {
-                widget.changeCurrentPage(Pages.settings);
+                changeCurrentPage(Pages.settings);
               });
             },
           ),
@@ -81,7 +92,7 @@ class _NavBarState extends State<NavBar> {
             selected: isSelected(Pages.info),
             onTap: () {
               setState(() {
-                widget.changeCurrentPage(Pages.info);
+                changeCurrentPage(Pages.info);
               });
             },
           ),
@@ -93,6 +104,7 @@ class _NavBarState extends State<NavBar> {
             child: ListTile(
               leading: Icon(Icons.logout),
               title: Text('Log Out'),
+              selected: false,
               onTap: () {
                 widget.accountManager.signOut();
                 Navigator.popUntil(

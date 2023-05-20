@@ -17,7 +17,7 @@ class InfoScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Info'),
         ),
-        drawer: NavBar(currentPage: Pages.info),
+        drawer: NavBar(initialPage: Pages.info),
         body: Padding(
           padding: const EdgeInsets.only(
             top: 16.0,

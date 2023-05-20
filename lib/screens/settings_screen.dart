@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Settings'),
         ),
-        drawer: NavBar(currentPage: Pages.settings),
+        drawer: NavBar(initialPage: Pages.settings),
       ),
     );
   }

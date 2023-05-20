@@ -14,7 +14,7 @@ class AssetsScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Assets'),
         ),
-        drawer: NavBar(currentPage: Pages.assets),
+        drawer: NavBar(initialPage: Pages.assets),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           child: Icon(
