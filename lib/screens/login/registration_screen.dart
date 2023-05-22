@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/managers/account_manager.dart';
 import 'package:tool_track/constants.dart';
-import 'package:tool_track/screens/assets_screen.dart';
+import 'package:tool_track/screens/assets/assets_screen.dart';
 import 'package:tool_track/components/rect_button.dart';
 
 class RegistrationScreen extends StatelessWidget {

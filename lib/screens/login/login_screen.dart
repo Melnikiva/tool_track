@@ -4,8 +4,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/managers/account_manager.dart';
 import 'package:tool_track/components/rect_button.dart';
 import 'package:tool_track/constants.dart';
-import 'package:tool_track/screens/assets_screen.dart';
-import 'package:tool_track/screens/registration_screen.dart';
+import 'package:tool_track/screens/assets/assets_screen.dart';
+import 'package:tool_track/screens/login/registration_screen.dart';
 
 // TODO: Remove before release
 const defaultEmail = 'ivanmel.vn23@gmail.com';

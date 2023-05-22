@@ -1,7 +1,7 @@
-import 'package:tool_track/screens/login_screen.dart';
-import 'package:tool_track/screens/assets_screen.dart';
+import 'package:tool_track/screens/login/login_screen.dart';
+import 'package:tool_track/screens/assets/assets_screen.dart';
 import 'package:tool_track/screens/account_screen.dart';
-import 'package:tool_track/screens/registration_screen.dart';
+import 'package:tool_track/screens/login/registration_screen.dart';
 import 'package:tool_track/screens/settings_screen.dart';
 import 'package:tool_track/screens/info/info_screen.dart';
 

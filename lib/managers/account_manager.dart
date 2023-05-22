@@ -3,6 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AccountManager {
   final _auth = FirebaseAuth.instance;
 
+  User? getCurrentUser() {
+    return _auth.currentUser;
+  }
+
   String getFullName() {
     return _auth.currentUser != null
         ? _auth.currentUser!.displayName!
