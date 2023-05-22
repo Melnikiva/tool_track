@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/account_screen.dart';
-import 'package:tool_track/screens/info_screen.dart';
+import 'package:tool_track/screens/info/info_screen.dart';
 import 'package:tool_track/screens/login_screen.dart';
 import 'package:tool_track/screens/assets_screen.dart';
 import 'package:tool_track/screens/registration_screen.dart';

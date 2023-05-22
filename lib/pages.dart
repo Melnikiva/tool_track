@@ -3,7 +3,7 @@ import 'package:tool_track/screens/assets_screen.dart';
 import 'package:tool_track/screens/account_screen.dart';
 import 'package:tool_track/screens/registration_screen.dart';
 import 'package:tool_track/screens/settings_screen.dart';
-import 'package:tool_track/screens/info_screen.dart';
+import 'package:tool_track/screens/info/info_screen.dart';
 
 enum Pages {
   registration,

@@ -40,14 +40,6 @@ class InfoScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 Text(
-                  'Bachelors degree project',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: kGrayColor,
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                Text(
                   'Ivan Melnyk',
                   style: TextStyle(
                     fontSize: 20.0,
