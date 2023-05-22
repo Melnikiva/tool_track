@@ -9,6 +9,7 @@ const double kFormElemetsGap = 16.0;
 // Colors
 const Color kPrimaryColor = Color(0xFF3F51B5);
 const Color kSecondaryColor = Color(0xFFFF9800);
+const Color kPrimaryLightColor = Color(0xFFC5CAE9);
 const Color kPrimaryDarkColor = Color(0xFF303F9F);
 
 // Regural Expressions to validate input
@@ -17,6 +18,12 @@ final RegExp kEmailValidation = RegExp(
 
 // Firebase
 
-const String kFirestoreUsersCollection = 'users';
-const String kFirestoreEmail = 'email';
-const String kFirestoreFullName = 'fullname';
+const String kFirestoreAssetsCollection = 'assets';
+const String kFirestoreHistoryCollection = 'history';
+const String kFirestoreImageUrl = 'image_url';
+const String kFirestoreTitle = 'title';
+const String kFirestoreDescription = 'description';
+const String kFirestoreCreator = 'creator';
+const String kFirestoreGroup = 'group';
+const String kFirestoreTimestamp = 'timestamp';
+const String kFirestoreTag = 'tag';
