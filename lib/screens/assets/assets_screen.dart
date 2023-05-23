@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tool_track/components/navbar.dart';
-import 'package:tool_track/constants.dart';
 import 'package:tool_track/pages.dart';
+import 'package:tool_track/screens/assets/components/assets_item.dart';
+import 'package:tool_track/screens/assets/create_asset_screen.dart';
 
 class AssetsScreen extends StatelessWidget {
   static const route = 'assets';
@@ -16,7 +17,9 @@ class AssetsScreen extends StatelessWidget {
           title: Text('Assets'),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, CreateAssetScreen.route);
+              },
               icon: Icon(Icons.add),
             ),
           ],
@@ -35,36 +38,6 @@ class AssetsScreen extends StatelessWidget {
             AssetsItem(),
             AssetsItem(),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AssetsItem extends StatelessWidget {
-  const AssetsItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        elevation: 4.0,
-        borderRadius: BorderRadius.all(
-          Radius.circular(8.0),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Image.network(
-                'https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day-1200x834.jpg',
-                fit: BoxFit.cover,
-                width: 120.0,
-                height: 120.0,
-              ),
-            ],
-          ),
         ),
       ),
     );

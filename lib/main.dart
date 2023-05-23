@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/account_screen.dart';
+import 'package:tool_track/screens/assets/create_asset_screen.dart';
 import 'package:tool_track/screens/info/info_screen.dart';
-import 'package:tool_track/screens/login_screen.dart';
-import 'package:tool_track/screens/assets_screen.dart';
-import 'package:tool_track/screens/registration_screen.dart';
+import 'package:tool_track/screens/login/login_screen.dart';
+import 'package:tool_track/screens/assets/assets_screen.dart';
+import 'package:tool_track/screens/login/registration_screen.dart';
 import 'package:tool_track/screens/settings_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -39,6 +40,7 @@ class MainApp extends StatelessWidget {
         AccountScreen.route: (context) => AccountScreen(),
         SettingsScreen.route: (context) => SettingsScreen(),
         InfoScreen.route: (context) => InfoScreen(),
+        CreateAssetScreen.route: (context) => CreateAssetScreen(),
       },
       builder: EasyLoading.init(),
     );

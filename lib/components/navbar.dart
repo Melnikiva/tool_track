@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tool_track/managers/account_manager.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/pages.dart';
-import 'package:tool_track/screens/login_screen.dart';
+import 'package:tool_track/screens/login/login_screen.dart';
 
 class NavBar extends StatefulWidget {
   final AccountManager accountManager = AccountManager();
