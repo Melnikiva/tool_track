@@ -4,7 +4,7 @@ class AssetData {
   String imageUrl;
   String creator;
   String group;
-  String tag = 'Available';
+  String tag = tagStatus[TagState.available]!;
   late String timestamp;
 
   AssetData({
@@ -27,3 +27,8 @@ enum TagState {
   available,
   unavailable,
 }
+
+Map<TagState, String> tagStatus = {
+  TagState.available: 'Available',
+  TagState.unavailable: 'Unavailable',
+};

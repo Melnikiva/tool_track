@@ -19,10 +19,15 @@ class StorageManager {
   void newAsset({required AssetData assetData}) {
     _firestore.collection(kFirestoreAssetsCollection).add({
       kFirestoreTitle: assetData.title,
+      kFirestoreDescription: assetData.description,
+      kFirestoreImageUrl: assetData.imageUrl,
+      kFirestoreCreator: assetData.creator,
+      kFirestoreTimestamp: assetData.timestamp,
+      kFirestoreTag: assetData.tag
     });
   }
 
-  Future? addNewImage(XFile? image) async {
+  Future? uploadImage(XFile? image) async {
     if (image == null) return null;
     Reference imagesDirRef = _storageRef.child('images');
     Reference uploadedImageRef = imagesDirRef.child(_getUniqueFileName());

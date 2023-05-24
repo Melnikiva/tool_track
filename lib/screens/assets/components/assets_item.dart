@@ -18,9 +18,9 @@ class AssetsItem extends StatelessWidget {
                 imageUrl:
                     'https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day-1200x834.jpg',
                 placeholder: (context, url) => Icon(
-                  Icons.handyman,
+                  Icons.image_outlined,
                   size: 100.0,
-                  color: Colors.black38,
+                  color: Colors.black45,
                 ),
                 fit: BoxFit.cover,
                 width: 120.0,
