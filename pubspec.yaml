@@ -16,6 +16,10 @@ dependencies:
     sdk: flutter
   firebase_storage: ^11.2.1
   image_picker: ^0.8.7+5
+  google_maps_flutter: ^2.2.7
+  geolocator: ^9.0.2
+  map_picker: ^0.0.3
+  geocoding: ^2.1.0
 
 dev_dependencies:
   flutter_test:
