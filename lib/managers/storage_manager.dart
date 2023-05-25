@@ -5,10 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tool_track/asset_data.dart';
 import 'package:tool_track/constants.dart';
-import 'package:tool_track/managers/account_manager.dart';
 
 class StorageManager {
-  final _accountManager = AccountManager();
   final _firestore = FirebaseFirestore.instance;
   final _storageRef = FirebaseStorage.instance.ref();
 
@@ -16,15 +14,10 @@ class StorageManager {
     return _firestore.collection(kFirestoreAssetsCollection).snapshots();
   }
 
-  void newAsset({required AssetData assetData}) {
-    _firestore.collection(kFirestoreAssetsCollection).add({
-      kFirestoreTitle: assetData.title,
-      kFirestoreDescription: assetData.description,
-      kFirestoreImageUrl: assetData.imageUrl,
-      kFirestoreCreator: assetData.creator,
-      kFirestoreTimestamp: assetData.timestamp,
-      kFirestoreTag: assetData.tag
-    });
+  void newAsset({required AssetData assetData}) async {
+    await _firestore
+        .collection(kFirestoreAssetsCollection)
+        .add(assetData.toJson());
   }
 
   Future? uploadImage(XFile? image) async {

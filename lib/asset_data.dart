@@ -1,34 +1,46 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:tool_track/constants.dart';
+
 class AssetData {
   String title;
   String description;
   String imageUrl;
   String creator;
   String group;
-  String tag = tagStatus[TagState.available]!;
-  late String timestamp;
+  String tag = TagState.available.toString();
+  LatLng? coordinates;
+  late int timestamp;
+  late int id;
 
   AssetData({
-    required this.title,
+    this.title = '',
+    this.creator = '',
+    this.group = '',
     this.description = '',
     this.imageUrl = '',
-    required this.creator,
-    required this.group,
+    this.coordinates,
   }) {
-    this.timestamp = getTimeString();
+    this.timestamp = _getTime();
+    this.id = this.timestamp;
   }
 
-  String getTimeString() {
-    final currentTime = DateTime.now().toString();
-    return currentTime.substring(0, currentTime.length - 4);
+  int _getTime() {
+    return DateTime.now().millisecondsSinceEpoch;
   }
+
+  Map<String, dynamic> toJson() => {
+        kFirestoreTitle: title,
+        kFirestoreDescription: description,
+        kFirestoreImageUrl: imageUrl,
+        kFirestoreCreator: creator,
+        kFirestoreTimestamp: timestamp,
+        kFirestoreTag: tag,
+        kFirestoreCoordinates: coordinates?.toJson(),
+        kFIrestoreId: id,
+      };
 }
 
 enum TagState {
   available,
   unavailable,
 }
-
-Map<TagState, String> tagStatus = {
-  TagState.available: 'Available',
-  TagState.unavailable: 'Unavailable',
-};
