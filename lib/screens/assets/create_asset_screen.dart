@@ -7,6 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
+import 'package:tool_track/asset_data.dart';
 import 'package:tool_track/components/rect_button.dart';
 import 'package:tool_track/constants.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,9 +31,10 @@ class CreateAssetScreen extends StatefulWidget {
 
 class _CreateAssetScreenState extends State<CreateAssetScreen> {
   final _controller = Completer<GoogleMapController>();
-  String imageUrl = '';
+  AssetData assetData = AssetData();
   LatLng position = LatLng(0, 0);
   MapPickerController mapPickerController = MapPickerController();
+  GoogleMapController? googleMapController;
 
   String locationResolved = 'Attach Initial Location';
 
@@ -42,12 +44,38 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
     initPosition();
   }
 
+  void resoleCoordinates() async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+    setState(() {
+      locationResolved =
+          '${placemarks.first.name}, ${placemarks.first.administrativeArea}';
+    });
+  }
+
   void initPosition() async {
     final Position pos = await widget._locationManager.getCurrentPosition();
     setState(() {
       position = LatLng(pos.latitude, pos.longitude);
+      googleMapController?.moveCamera(CameraUpdate.newLatLng(position));
     });
-    print(position);
+
+    resoleCoordinates();
+  }
+
+  void uploadImage({required bool fromGallery}) async {
+    ImagePicker imagePicker = ImagePicker();
+    ImageSource imageSource =
+        fromGallery ? ImageSource.gallery : ImageSource.camera;
+    XFile? image = await imagePicker.pickImage(source: imageSource);
+
+    String? uploadUrl = await widget._storageManager.uploadImage(image);
+    if (uploadUrl == null) return;
+    setState(() {
+      assetData.imageUrl = uploadUrl;
+    });
   }
 
   @override
@@ -66,14 +94,14 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                   children: [
                     Row(
                       children: [
-                        imageUrl == ''
+                        assetData.imageUrl == ''
                             ? Icon(
                                 Icons.image_outlined,
                                 color: Colors.black45,
                                 size: kImageSize,
                               )
                             : Image.network(
-                                imageUrl,
+                                assetData.imageUrl,
                                 width: kImageSize,
                                 height: kImageSize,
                                 fit: BoxFit.cover,
@@ -83,24 +111,14 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                         ),
                         Text(
                           'Attach Image',
-                          style: TextStyle(fontSize: 16.0),
+                          style: kTextStyleDefault,
                         ),
                         Expanded(
                           child: Container(),
                         ),
                         CardIconButton(
-                          onPressed: () async {
-                            ImagePicker imagePicker = ImagePicker();
-                            XFile? image = await imagePicker.pickImage(
-                                source: ImageSource.gallery);
-                            String? uploadUrl =
-                                await widget._storageManager.uploadImage(image);
-
-                            if (uploadUrl == null) return;
-                            print(uploadUrl);
-                            setState(() {
-                              imageUrl = uploadUrl;
-                            });
+                          onPressed: () {
+                            uploadImage(fromGallery: true);
                           },
                           icon: Icons.attach_file,
                         ),
@@ -109,8 +127,7 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                         ),
                         CardIconButton(
                           onPressed: () {
-                            ImagePicker imagePicker = ImagePicker();
-                            imagePicker.pickImage(source: ImageSource.camera);
+                            uploadImage(fromGallery: false);
                           },
                           icon: Icons.camera_alt_outlined,
                         ),
@@ -151,12 +168,14 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                     SizedBox(
                       height: kFormElemetsGap * 2,
                     ),
-                    ExpansionPanelList(
+                    ExpansionPanelList.radio(
+                      initialOpenPanelValue: 1,
                       children: [
-                        ExpansionPanel(
-                          isExpanded: true,
+                        ExpansionPanelRadio(
+                          value: 1,
                           headerBuilder: ((context, isExpanded) {
                             return ListTile(
+                              contentPadding: EdgeInsets.all(8.0),
                               title: Row(
                                 children: [
                                   Icon(Icons.location_on_outlined),
@@ -168,7 +187,7 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                                     child: Text(
                                       locationResolved,
                                       maxLines: 3,
-                                      style: TextStyle(fontSize: 16.0),
+                                      style: kTextStyleDefault,
                                     ),
                                   ),
                                 ],
@@ -188,42 +207,27 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                               child: GoogleMap(
                                 myLocationEnabled: true,
                                 zoomControlsEnabled: false,
-                                // onMapCreated: (GoogleMapController controller) {
-                                //   _controller.complete(controller);
-                                // },
                                 initialCameraPosition: CameraPosition(
                                   target: position,
                                   zoom: 16.5,
                                 ),
-                                onMapCreated: (controller) async {
-                                  await controller.moveCamera(
-                                      CameraUpdate.newLatLng(position));
+                                onMapCreated: (controller) {
+                                  _controller.complete(controller);
+                                  googleMapController = controller;
+                                  print('MAP CREATED');
+                                  print(position);
                                 },
                                 onCameraMoveStarted: () {
-                                  // notify map is moving
                                   mapPickerController.mapMoving!();
                                 },
                                 onCameraMove: (cameraPosition) {
                                   this.position = cameraPosition.target;
-                                  // setState(() {
-
-                                  // });
                                 },
                                 onCameraIdle: () async {
                                   // notify map stopped moving
                                   mapPickerController.mapFinishedMoving!();
                                   //get address name from camera position
-                                  List<Placemark> placemarks =
-                                      await placemarkFromCoordinates(
-                                    position.latitude,
-                                    position.longitude,
-                                  );
-
-                                  // update the ui with the address
-                                  setState(() {
-                                    locationResolved =
-                                        '${placemarks.first.name}, ${placemarks.first.administrativeArea}';
-                                  });
+                                  resoleCoordinates();
                                 },
                                 gestureRecognizers: Set()
                                   ..add(
@@ -234,11 +238,48 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(
+                      height: kFormElemetsGap * 2,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Custom ID",
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: "Define your custom ID",
+                        counterText: "Auto generated ID is: ${assetData.id}",
+                      ),
+                      keyboardType: TextInputType.number,
+                    ),
+                    SizedBox(
                       height: kFormElemetsGap,
+                    ),
+                    BorderedContainer(
+                      child: Row(
+                        children: [
+                          Text(
+                            'Attach Identificator',
+                            style: kTextStyleDefault,
+                          ),
+                          Expanded(
+                            child: Container(),
+                          ),
+                          CardIconButton(
+                            onPressed: () {},
+                            icon: Icons.qr_code_2,
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          CardIconButton(
+                            onPressed: () {},
+                            icon: Icons.sensors,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -256,6 +297,30 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class BorderedContainer extends StatelessWidget {
+  final Widget child;
+  final Color borderColor;
+  final double borderWidth;
+
+  const BorderedContainer(
+      {super.key,
+      required this.child,
+      this.borderColor = Colors.black38,
+      this.borderWidth = 1.0});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        border: Border.all(width: this.borderWidth, color: this.borderColor),
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+      child: this.child,
     );
   }
 }
