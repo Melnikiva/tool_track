@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Text Style
+const TextStyle kTextStyleDefault = TextStyle(fontSize: 16.0);
+
 // Icons
 const IconData kMainIcon = Icons.handyman_rounded;
 
@@ -27,3 +30,5 @@ const String kFirestoreCreator = 'creator';
 const String kFirestoreGroup = 'group';
 const String kFirestoreTimestamp = 'timestamp';
 const String kFirestoreTag = 'tag';
+const String kFirestoreCoordinates = 'coordinates';
+const String kFIrestoreId = 'id';
