@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tool_track/asset_data.dart';
 import 'package:tool_track/constants.dart';
+import 'package:tool_track/screens/assets/components/tag.dart';
 
 const String kPlaceholderImageUrl =
     'https://t4.ftcdn.net/jpg/05/07/58/41/360_F_507584110_KNIfe7d3hUAEpraq10J7MCPmtny8EH7A.jpg';
@@ -42,11 +43,12 @@ class AssetsItem extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       assetData.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -56,6 +58,13 @@ class AssetsItem extends StatelessWidget {
                       icon: Icons.person_outline,
                       text: assetData.creator,
                     ),
+                    IconDescription(
+                      icon: Icons.group_outlined,
+                      text: assetData.group.isEmpty
+                          ? 'Personal group'
+                          : assetData.group,
+                    ),
+                    Tag(status: assetData.tag)
                   ],
                 ),
               )
