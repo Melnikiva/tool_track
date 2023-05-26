@@ -8,9 +8,10 @@ class AssetData {
   String creator;
   String group;
   String tag = TagState.available.toString();
-  LatLng? coordinates;
+  late LatLng coordinates;
   late int timestamp;
-  late int id;
+  late String id;
+  late String rfid;
 
   AssetData({
     this.title = '',
@@ -18,10 +19,11 @@ class AssetData {
     this.group = '',
     this.description = '',
     this.imageUrl = '',
-    this.coordinates,
+    this.rfid = '',
   }) {
+    this.coordinates = LatLng(0, 0);
     this.timestamp = _getTime();
-    this.id = this.timestamp;
+    this.id = this.timestamp.toString();
   }
 
   int _getTime() {
@@ -35,9 +37,16 @@ class AssetData {
         kFirestoreCreator: creator,
         kFirestoreTimestamp: timestamp,
         kFirestoreTag: tag,
-        kFirestoreCoordinates: coordinates?.toJson(),
+        kFirestoreCoordinates: coordinates.toJson(),
         kFIrestoreId: id,
+        kFirestoreRfid: rfid,
       };
+
+  static AssetData fromJson(Map<String, dynamic> parsedJson) {
+    return new AssetData(
+      title: parsedJson[kFirestoreTitle],
+    );
+  }
 }
 
 enum TagState {

@@ -14,8 +14,8 @@ class StorageManager {
     return _firestore.collection(kFirestoreAssetsCollection).snapshots();
   }
 
-  void newAsset({required AssetData assetData}) async {
-    await _firestore
+  Future newAsset({required AssetData assetData}) async {
+    return await _firestore
         .collection(kFirestoreAssetsCollection)
         .add(assetData.toJson());
   }

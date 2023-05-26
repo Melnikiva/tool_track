@@ -65,7 +65,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           style: TextStyle(color: Colors.white, fontSize: 16.0),
           textAlign: TextAlign.center,
         ),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: kAlertColor,
       ),
     );
   }
