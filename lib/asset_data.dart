@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tool_track/constants.dart';
 
@@ -7,7 +8,7 @@ class AssetData {
   String imageUrl;
   String creator;
   String group;
-  String tag = TagState.available.toString();
+  String tag = TagStatus.available.toString();
   late LatLng coordinates;
   late int timestamp;
   late String id;
@@ -40,16 +41,29 @@ class AssetData {
         kFirestoreCoordinates: coordinates.toJson(),
         kFIrestoreId: id,
         kFirestoreRfid: rfid,
+        kFirestoreGroup: group,
       };
 
-  static AssetData fromJson(Map<String, dynamic> parsedJson) {
-    return new AssetData(
-      title: parsedJson[kFirestoreTitle],
-    );
+  static AssetData fromJson(QueryDocumentSnapshot parsedJson) {
+    final assetObject = AssetData();
+    assetObject.title = parsedJson[kFirestoreTitle];
+    assetObject.description = parsedJson[kFirestoreDescription];
+    assetObject.imageUrl = parsedJson[kFirestoreImageUrl];
+    assetObject.creator = parsedJson[kFirestoreCreator];
+    assetObject.timestamp = parsedJson[kFirestoreTimestamp];
+    assetObject.tag = parsedJson[kFirestoreTag];
+    // assetObject.coordinates = parsedJson[kFirestoreCoordinates];
+    assetObject.id = parsedJson[kFIrestoreId];
+    assetObject.rfid = parsedJson[kFirestoreRfid];
+    assetObject.group = parsedJson[kFirestoreGroup];
+
+    print(assetObject.toJson());
+
+    return assetObject;
   }
 }
 
-enum TagState {
+enum TagStatus {
   available,
   unavailable,
 }

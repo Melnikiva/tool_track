@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:tool_track/asset_data.dart';
+import 'package:tool_track/constants.dart';
+
+const String kPlaceholderImageUrl =
+    'https://t4.ftcdn.net/jpg/05/07/58/41/360_F_507584110_KNIfe7d3hUAEpraq10J7MCPmtny8EH7A.jpg';
 
 class AssetsItem extends StatelessWidget {
-  const AssetsItem({super.key});
+  final AssetData assetData;
+  const AssetsItem({super.key, required this.assetData});
 
   @override
   Widget build(BuildContext context) {
@@ -10,40 +16,45 @@ class AssetsItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
         elevation: 4.0,
-        child: Padding(
+        child: Container(
           padding: EdgeInsets.all(16.0),
+          height: 150.0,
           child: Row(
             children: [
-              CachedNetworkImage(
-                imageUrl:
-                    'https://nationaltoday.com/wp-content/uploads/2020/08/international-cat-day-1200x834.jpg',
-                placeholder: (context, url) => Icon(
-                  Icons.image_outlined,
-                  size: 100.0,
-                  color: Colors.black45,
+              AspectRatio(
+                aspectRatio: 1.0,
+                child: CachedNetworkImage(
+                  imageUrl: !assetData.imageUrl.isEmpty
+                      ? assetData.imageUrl
+                      : kPlaceholderImageUrl,
+                  placeholder: (context, url) => Icon(
+                    Icons.image_outlined,
+                    size: 100.0,
+                    color: Colors.black45,
+                  ),
+                  fit: BoxFit.cover,
+                  height: double.infinity,
                 ),
-                fit: BoxFit.cover,
-                width: 120.0,
-                height: 120.0,
               ),
               SizedBox(
                 width: 16.0,
               ),
               Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      'Title',
+                      assetData.title,
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      'Description',
-                      style: TextStyle(),
+                    IconDescription(
+                      icon: Icons.person_outline,
+                      text: assetData.creator,
                     ),
                   ],
                 ),
@@ -52,6 +63,31 @@ class AssetsItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class IconDescription extends StatelessWidget {
+  const IconDescription({super.key, required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 20.0,
+          color: kPrimaryColor,
+        ),
+        SizedBox(width: 4.0),
+        Text(
+          text,
+          style: TextStyle(),
+        ),
+      ],
     );
   }
 }

@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:tool_track/components/navbar.dart';
+import 'package:tool_track/managers/storage_manager.dart';
 import 'package:tool_track/pages.dart';
 import 'package:tool_track/screens/assets/components/assets_item.dart';
+import 'package:tool_track/screens/assets/components/assets_stream.dart';
 import 'package:tool_track/screens/assets/create_asset_screen.dart';
 
-class AssetsScreen extends StatelessWidget {
+class AssetsScreen extends StatefulWidget {
+  const AssetsScreen({super.key});
   static const route = 'assets';
-  AssetsScreen({super.key});
+
+  @override
+  State<AssetsScreen> createState() => _AssetsScreenState();
+}
+
+class _AssetsScreenState extends State<AssetsScreen> {
+  final StorageManager _storageManager = StorageManager();
+  late Stream assetsStream;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +42,7 @@ class AssetsScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        body: ListView(
-          children: [
-            AssetsItem(),
-            AssetsItem(),
-            AssetsItem(),
-          ],
-        ),
+        body: AssetsStream(),
       ),
     );
   }

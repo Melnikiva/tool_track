@@ -318,8 +318,8 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                 onPressed: () async {
                   EasyLoading.show();
                   await widget._storageManager.newAsset(assetData: assetData);
-                  Navigator.pop(context);
                   EasyLoading.dismiss();
+                  Navigator.pop(context);
                 },
                 color: kSecondaryColor,
               ),

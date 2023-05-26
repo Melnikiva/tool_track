@@ -10,7 +10,7 @@ class StorageManager {
   final _firestore = FirebaseFirestore.instance;
   final _storageRef = FirebaseStorage.instance.ref();
 
-  Stream getAssetsStream() {
+  Stream<QuerySnapshot> getAssetsStream() {
     return _firestore.collection(kFirestoreAssetsCollection).snapshots();
   }
 
