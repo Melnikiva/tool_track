@@ -14,6 +14,7 @@ const Color kPrimaryColor = Color(0xFF3F51B5);
 const Color kSecondaryColor = Color(0xFFFF9800);
 const Color kPrimaryLightColor = Color(0xFFC5CAE9);
 const Color kPrimaryDarkColor = Color(0xFF303F9F);
+const Color kAlertColor = Colors.red;
 
 // Regural Expressions to validate input
 final RegExp kEmailValidation = RegExp(
@@ -32,3 +33,7 @@ const String kFirestoreTimestamp = 'timestamp';
 const String kFirestoreTag = 'tag';
 const String kFirestoreCoordinates = 'coordinates';
 const String kFIrestoreId = 'id';
+const String kFirestoreRfid = 'rfid';
+
+// Warnings
+const String kNfcUnavailable = 'Error getting RFID data';
