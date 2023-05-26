@@ -15,11 +15,26 @@ class AssetsStream extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
-            child: Text(
-              "The list is currently empty! Click '+' to add new assets",
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.black38,
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "The list is currently empty",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black38,
+                    ),
+                  ),
+                  Text(
+                    "Click '+' to add new assets",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black38,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
