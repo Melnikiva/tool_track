@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/account_screen.dart';
 import 'package:tool_track/screens/assets/create_asset_screen.dart';
+import 'package:tool_track/screens/history_screen.dart';
 import 'package:tool_track/screens/info/info_screen.dart';
 import 'package:tool_track/screens/login/login_screen.dart';
 import 'package:tool_track/screens/assets/assets_screen.dart';
@@ -41,6 +42,7 @@ class MainApp extends StatelessWidget {
         SettingsScreen.route: (context) => SettingsScreen(),
         InfoScreen.route: (context) => InfoScreen(),
         CreateAssetScreen.route: (context) => CreateAssetScreen(),
+        HistoryScreen.route: (context) => HistoryScreen(),
       },
       builder: EasyLoading.init(),
     );

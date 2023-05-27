@@ -58,9 +58,7 @@ class _NavBarState extends State<NavBar> {
             pageRoute: Pages.account,
             selected: isSelected(Pages.account),
             onTap: () {
-              setState(() {
-                changeCurrentPage(Pages.account);
-              });
+              changeCurrentPage(Pages.account);
             },
           ),
           DrawerListItem(
@@ -71,6 +69,17 @@ class _NavBarState extends State<NavBar> {
             onTap: () {
               setState(() {
                 changeCurrentPage(Pages.assets);
+              });
+            },
+          ),
+          DrawerListItem(
+            title: 'History',
+            icon: Icons.history,
+            pageRoute: Pages.history,
+            selected: isSelected(Pages.history),
+            onTap: () {
+              setState(() {
+                changeCurrentPage(Pages.history);
               });
             },
           ),
@@ -136,7 +145,8 @@ class DrawerListItem extends StatelessWidget {
   });
 
   void goToPage(BuildContext context) {
-    Navigator.pushReplacementNamed(context, pageRoutes[pageRoute]!);
+    Navigator.pop(context);
+    Navigator.pushNamed(context, pageRoutes[pageRoute]!);
   }
 
   @override
