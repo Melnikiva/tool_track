@@ -46,9 +46,10 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
     initPosition();
   }
 
-  void resoleCoordinates() async {
+  void resolveCoordinates() async {
     // Delay to wait for map initialization
     await Future.delayed(Duration(milliseconds: 500));
+    if (assetData.coordinates.latitude == 0) return;
     List<Placemark> placemarks = await placemarkFromCoordinates(
       assetData.coordinates.latitude,
       assetData.coordinates.longitude,
@@ -67,7 +68,7 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
           ?.moveCamera(CameraUpdate.newLatLng(assetData.coordinates));
     });
 
-    resoleCoordinates();
+    resolveCoordinates();
   }
 
   void uploadImage({required bool fromGallery}) async {
@@ -245,7 +246,7 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                                 // notify map stopped moving
                                 mapPickerController.mapFinishedMoving!();
                                 //get address name from camera position
-                                resoleCoordinates();
+                                resolveCoordinates();
                               },
                               gestureRecognizers: Set()
                                 ..add(
