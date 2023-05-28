@@ -36,7 +36,7 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
   GoogleMapController? googleMapController;
 
   AssetData assetData = AssetData();
-  String locationResolved = 'Initial Location';
+  String locationResolved = 'Pick Location';
   String identifierResolved = 'Attach Identifier';
 
   @override
