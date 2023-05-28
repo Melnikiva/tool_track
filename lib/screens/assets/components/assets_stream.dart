@@ -5,8 +5,20 @@ import 'package:tool_track/managers/storage_manager.dart';
 import 'package:tool_track/screens/assets/components/assets_item.dart';
 
 class AssetsStream extends StatelessWidget {
-  AssetsStream({super.key});
+  AssetsStream({super.key, required this.searchText});
+
+  final String searchText;
   final _storageManager = StorageManager();
+
+  List<AssetsItem> filter(List<AssetsItem> assetsList) {
+    List<AssetsItem> filteredList = assetsList;
+    filteredList.retainWhere(
+      (element) => element.assetData.title.toLowerCase().contains(
+            searchText.toLowerCase(),
+          ),
+    );
+    return filteredList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +63,11 @@ class AssetsStream extends StatelessWidget {
             );
           }
         }
+        assetsList = filter(assetsList);
+        assetsList.sort((a, b) => a.assetData.title.toLowerCase().compareTo(
+              b.assetData.title.toLowerCase(),
+            ));
+
         return ListView(
           children: assetsList,
         );

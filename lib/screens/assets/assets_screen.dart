@@ -15,8 +15,14 @@ class AssetsScreen extends StatefulWidget {
 }
 
 class _AssetsScreenState extends State<AssetsScreen> {
-  final StorageManager _storageManager = StorageManager();
   late Stream assetsStream;
+  String searchText = '';
+
+  void searchAssets(String searchString) {
+    setState(() {
+      searchText = searchString;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,33 @@ class _AssetsScreenState extends State<AssetsScreen> {
             color: Colors.white,
           ),
         ),
-        body: AssetsStream(),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchBar(
+                padding: MaterialStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0),
+                ),
+                elevation: MaterialStatePropertyAll<double>(2.0),
+                hintText: "Search",
+                leading: Icon(
+                  Icons.search,
+                  color: Colors.black38,
+                ),
+                hintStyle: MaterialStatePropertyAll<TextStyle>(
+                  TextStyle(color: Colors.black38),
+                ),
+                onChanged: searchAssets,
+              ),
+            ),
+            Expanded(
+              child: AssetsStream(
+                searchText: searchText,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
