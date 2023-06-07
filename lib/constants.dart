@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 // Text Style
 const TextStyle kTextStyleDefault = TextStyle(fontSize: 16.0);
+const TextStyle kStrongTextStyle =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0);
 
 // Icons
 const IconData kMainIcon = Icons.handyman_rounded;
@@ -21,9 +23,9 @@ final RegExp kEmailValidation = RegExp(
     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
 // Firebase
-
 const String kFirestoreAssetsCollection = 'assets';
 const String kFirestoreHistoryCollection = 'history';
+const String kFirestoreGroupsCollection = 'groups';
 const String kFirestoreImageUrl = 'image_url';
 const String kFirestoreTitle = 'title';
 const String kFirestoreDescription = 'description';
@@ -32,8 +34,12 @@ const String kFirestoreGroup = 'group';
 const String kFirestoreTimestamp = 'timestamp';
 const String kFirestoreTag = 'tag';
 const String kFirestoreCoordinates = 'coordinates';
-const String kFIrestoreId = 'id';
+const String kFirestoreId = 'id';
 const String kFirestoreRfid = 'rfid';
 
 // Warnings
 const String kNfcUnavailable = 'Error getting RFID data';
+
+// Images
+const String kPlaceholderImageUrl =
+    'https://t4.ftcdn.net/jpg/05/07/58/41/360_F_507584110_KNIfe7d3hUAEpraq10J7MCPmtny8EH7A.jpg';

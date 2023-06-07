@@ -1,4 +1,5 @@
-import 'package:tool_track/screens/history_screen.dart';
+import 'package:tool_track/screens/groups/groups_screen.dart';
+import 'package:tool_track/screens/history/history_screen.dart';
 import 'package:tool_track/screens/login/login_screen.dart';
 import 'package:tool_track/screens/assets/assets_screen.dart';
 import 'package:tool_track/screens/account_screen.dart';
@@ -14,6 +15,7 @@ enum Pages {
   settings,
   info,
   history,
+  groups,
 }
 
 Map<Pages, String> pageRoutes = {
@@ -24,4 +26,5 @@ Map<Pages, String> pageRoutes = {
   Pages.settings: SettingsScreen.route,
   Pages.info: InfoScreen.route,
   Pages.history: HistoryScreen.route,
+  Pages.groups: GroupsScreen.route,
 };

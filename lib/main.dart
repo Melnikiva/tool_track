@@ -3,7 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tool_track/constants.dart';
 import 'package:tool_track/screens/account_screen.dart';
 import 'package:tool_track/screens/assets/create_asset_screen.dart';
-import 'package:tool_track/screens/history_screen.dart';
+import 'package:tool_track/screens/groups/groups_screen.dart';
+import 'package:tool_track/screens/history/history_screen.dart';
 import 'package:tool_track/screens/info/info_screen.dart';
 import 'package:tool_track/screens/login/login_screen.dart';
 import 'package:tool_track/screens/assets/assets_screen.dart';
@@ -27,6 +28,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
         colorScheme: ColorScheme.light().copyWith(
           primary: kPrimaryColor,
@@ -43,6 +45,7 @@ class MainApp extends StatelessWidget {
         InfoScreen.route: (context) => InfoScreen(),
         CreateAssetScreen.route: (context) => CreateAssetScreen(),
         HistoryScreen.route: (context) => HistoryScreen(),
+        GroupsScreen.route: (context) => GroupsScreen(),
       },
       builder: EasyLoading.init(),
     );

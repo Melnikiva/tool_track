@@ -52,15 +52,15 @@ class _NavBarState extends State<NavBar> {
               color: Colors.white,
             ),
           ),
-          DrawerListItem(
-            title: 'Account',
-            icon: Icons.account_circle_rounded,
-            pageRoute: Pages.account,
-            selected: isSelected(Pages.account),
-            onTap: () {
-              changeCurrentPage(Pages.account);
-            },
-          ),
+          // DrawerListItem(
+          //   title: 'Account',
+          //   icon: Icons.account_circle_rounded,
+          //   pageRoute: Pages.account,
+          //   selected: isSelected(Pages.account),
+          //   onTap: () {
+          //     changeCurrentPage(Pages.account);
+          //   },
+          // ),
           DrawerListItem(
             title: 'Assets',
             icon: Icons.handyman_rounded,
@@ -84,16 +84,27 @@ class _NavBarState extends State<NavBar> {
             },
           ),
           DrawerListItem(
-            title: 'Settings',
-            icon: Icons.settings,
-            pageRoute: Pages.settings,
-            selected: isSelected(Pages.settings),
+            title: 'Groups',
+            icon: Icons.group,
+            pageRoute: Pages.groups,
+            selected: isSelected(Pages.groups),
             onTap: () {
               setState(() {
-                changeCurrentPage(Pages.settings);
+                changeCurrentPage(Pages.groups);
               });
             },
           ),
+          // DrawerListItem(
+          //   title: 'Settings',
+          //   icon: Icons.settings,
+          //   pageRoute: Pages.settings,
+          //   selected: isSelected(Pages.settings),
+          //   onTap: () {
+          //     setState(() {
+          //       changeCurrentPage(Pages.settings);
+          //     });
+          //   },
+          // ),
           DrawerListItem(
             title: 'Info',
             icon: Icons.info,

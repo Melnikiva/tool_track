@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tool_track/asset_data.dart';
+import 'package:tool_track/data_models/asset_data.dart';
 
 class Tag extends StatelessWidget {
   final String status;

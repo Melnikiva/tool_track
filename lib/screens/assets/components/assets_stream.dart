@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tool_track/asset_data.dart';
+import 'package:tool_track/components/empty_list_placeholder.dart';
+import 'package:tool_track/data_models/asset_data.dart';
 import 'package:tool_track/managers/storage_manager.dart';
 import 'package:tool_track/screens/assets/components/assets_item.dart';
 
@@ -26,30 +27,7 @@ class AssetsStream extends StatelessWidget {
       stream: _storageManager.getAssetsStream(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "The list is currently empty",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black38,
-                    ),
-                  ),
-                  Text(
-                    "Click '+' to add new assets",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black38,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return EmptyListPlaceholder();
         }
 
         final assets = snapshot.data?.docs;
@@ -69,6 +47,7 @@ class AssetsStream extends StatelessWidget {
             ));
 
         return ListView(
+          padding: EdgeInsets.only(bottom: 8.0),
           children: assetsList,
         );
       },

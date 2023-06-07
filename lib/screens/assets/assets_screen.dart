@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tool_track/components/navbar.dart';
+import 'package:tool_track/managers/scanner_manager.dart';
 import 'package:tool_track/managers/storage_manager.dart';
 import 'package:tool_track/pages.dart';
 import 'package:tool_track/screens/assets/components/assets_item.dart';
@@ -42,9 +43,13 @@ class _AssetsScreenState extends State<AssetsScreen> {
         ),
         drawer: NavBar(initialPage: Pages.assets),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () async {
+            final String rfid = await ScannerManager().scanRfid();
+            StorageManager().createHistoryRecord(rfid);
+          },
           child: Icon(
-            Icons.qr_code_scanner,
+            Icons.sensors,
+            size: 28.0,
             color: Colors.white,
           ),
         ),

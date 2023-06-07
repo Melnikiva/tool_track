@@ -7,7 +7,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
-import 'package:tool_track/asset_data.dart';
+import 'package:tool_track/data_models/asset_data.dart';
+import 'package:tool_track/components/bordered_container.dart';
 import 'package:tool_track/components/rect_button.dart';
 import 'package:tool_track/constants.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +16,7 @@ import 'package:tool_track/managers/account_manager.dart';
 import 'package:tool_track/managers/location_manager.dart';
 import 'package:tool_track/managers/scanner_manager.dart';
 import 'package:tool_track/managers/storage_manager.dart';
-import 'components/card_icon_button.dart';
+import '../../components/card_icon_button.dart';
 
 const double kImageSize = 100.0;
 
@@ -25,6 +26,7 @@ class CreateAssetScreen extends StatefulWidget {
   static const route = 'create_asset';
   final StorageManager _storageManager = StorageManager();
   final LocationManager _locationManager = LocationManager();
+  final ScannerManager _scannerManager = ScannerManager();
 
   @override
   State<CreateAssetScreen> createState() => _CreateAssetScreenState();
@@ -232,8 +234,6 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                               ),
                               onMapCreated: (controller) {
                                 googleMapController = controller;
-                                print('MAP CREATED');
-                                print(assetData.coordinates);
                               },
                               onCameraMoveStarted: () {
                                 mapPickerController.mapMoving!();
@@ -294,7 +294,8 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
                         ),
                         CardIconButton(
                           onPressed: () async {
-                            final rfidData = await ScannerManager().scanRfid();
+                            final rfidData =
+                                await widget._scannerManager.scanRfid();
                             setState(() {
                               identifierResolved = rfidData;
                             });
@@ -313,7 +314,12 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.only(bottom: 16.0, top: 8.0),
+              padding: EdgeInsets.only(
+                bottom: 16.0,
+                top: 8.0,
+                left: 16.0,
+                right: 16.0,
+              ),
               child: RectButton(
                 text: "CREATE",
                 onPressed: () async {
@@ -328,30 +334,6 @@ class _CreateAssetScreenState extends State<CreateAssetScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class BorderedContainer extends StatelessWidget {
-  final Widget child;
-  final Color borderColor;
-  final double borderWidth;
-
-  const BorderedContainer(
-      {super.key,
-      required this.child,
-      this.borderColor = Colors.black38,
-      this.borderWidth = 1.0});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        border: Border.all(width: this.borderWidth, color: this.borderColor),
-        borderRadius: BorderRadius.circular(6.0),
-      ),
-      child: this.child,
     );
   }
 }

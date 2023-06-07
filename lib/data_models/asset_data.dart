@@ -39,7 +39,7 @@ class AssetData {
         kFirestoreTimestamp: timestamp,
         kFirestoreTag: tag,
         kFirestoreCoordinates: coordinates.toJson(),
-        kFIrestoreId: id,
+        kFirestoreId: id,
         kFirestoreRfid: rfid,
         kFirestoreGroup: group,
       };
@@ -52,15 +52,23 @@ class AssetData {
     assetObject.creator = parsedJson[kFirestoreCreator];
     assetObject.timestamp = parsedJson[kFirestoreTimestamp];
     assetObject.tag = parsedJson[kFirestoreTag];
-    // assetObject.coordinates = parsedJson[kFirestoreCoordinates];
-    assetObject.id = parsedJson[kFIrestoreId];
+    assetObject.coordinates =
+        parseCoordinates(parsedJson[kFirestoreCoordinates]);
+    assetObject.id = parsedJson[kFirestoreId];
     assetObject.rfid = parsedJson[kFirestoreRfid];
     assetObject.group = parsedJson[kFirestoreGroup];
 
-    print(assetObject.toJson());
-
     return assetObject;
   }
+
+  String getTimeString() {
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return '${date.day}-${date.month}-${date.year} ${date.hour}:${date.minute}:${date.second}';
+  }
+}
+
+LatLng parseCoordinates(List<dynamic> coordsArray) {
+  return LatLng(coordsArray[0], coordsArray[1]);
 }
 
 enum TagStatus {

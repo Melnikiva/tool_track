@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tool_track/components/navbar.dart';
 import 'package:tool_track/pages.dart';
+import 'package:tool_track/screens/history/components/history_stream.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -16,6 +17,7 @@ class HistoryScreen extends StatelessWidget {
           title: Text('History'),
         ),
         drawer: NavBar(initialPage: Pages.history),
+        body: HistoryStream(),
       ),
     );
   }
