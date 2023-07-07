@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tool_track/constants.dart';
 import 'package:tool_track/data_models/asset_data.dart';
 import 'package:tool_track/components/icon_description.dart';
 import 'package:tool_track/components/image_card.dart';
 import 'package:tool_track/components/square_network_image.dart';
 import 'package:tool_track/components/tag.dart';
 import 'package:tool_track/data_models/group_data.dart';
+import 'package:tool_track/managers/storage_manager.dart';
 import 'package:tool_track/screens/details/details_screen.dart';
 
 class GroupItem extends StatelessWidget {
@@ -29,14 +31,26 @@ class GroupItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  groupData.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      groupData.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete_outline),
+                      color: kPrimaryColor,
+                      onPressed: () {
+                        StorageManager().removeGroup(groupData.title);
+                      },
+                    ),
+                  ],
                 ),
                 IconDescription(
                   icon: Icons.description_outlined,

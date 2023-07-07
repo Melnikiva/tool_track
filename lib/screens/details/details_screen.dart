@@ -1,14 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:tool_track/components/rect_button.dart';
 import 'package:tool_track/data_models/asset_data.dart';
 import 'package:tool_track/components/square_network_image.dart';
 import 'package:tool_track/components/tag.dart';
 import 'package:tool_track/constants.dart';
+import 'package:tool_track/managers/storage_manager.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   static const String route = 'details';
 
   DetailsScreen({
@@ -20,18 +23,43 @@ class DetailsScreen extends StatelessWidget {
   final AssetData assetData;
 
   @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  bool isEdited = false;
+  List groups = [];
+  late AssetData _assetData;
+
+  @override
+  void initState() {
+    super.initState();
+    getGroups();
+    _assetData = widget.assetData;
+  }
+
+  void getGroups() async {
+    groups = await StorageManager().getGroups();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          assetData.title,
+          widget.assetData.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.edit),
+            onPressed: () {
+              setState(() {
+                if (isEdited) StorageManager().updateAsset(_assetData);
+                isEdited = !isEdited;
+              });
+            },
+            icon: !isEdited ? Icon(Icons.edit) : Icon(Icons.done),
           ),
         ],
       ),
@@ -41,10 +69,10 @@ class DetailsScreen extends StatelessWidget {
           children: [
             Stack(
               children: [
-                SquareNetworkImage(imageUrl: assetData.imageUrl),
+                SquareNetworkImage(imageUrl: widget.assetData.imageUrl),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Tag(status: assetData.tag),
+                  child: Tag(status: widget.assetData.tag),
                 ),
               ],
             ),
@@ -53,16 +81,47 @@ class DetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    assetData.title,
-                    style:
-                        TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
-                  ),
+                  !isEdited
+                      ? Text(
+                          widget.assetData.title,
+                          style: TextStyle(
+                              fontSize: 32.0, fontWeight: FontWeight.bold),
+                        )
+                      : TextFormField(
+                          maxLength: 30,
+                          initialValue: _assetData.title,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Name",
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                          onChanged: (value) {
+                            _assetData.title = value;
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please fill this field';
+                            }
+                            return null;
+                          },
+                        ),
                   SizedBox(height: kFormElemetsGap / 2),
-                  Text(
-                    assetData.description,
-                    style: kTextStyleDefault,
-                  ),
+                  !isEdited
+                      ? Text(
+                          widget.assetData.description,
+                          style: kTextStyleDefault,
+                        )
+                      : TextFormField(
+                          maxLines: 3,
+                          initialValue: _assetData.description,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Description",
+                          ),
+                          onChanged: (value) {
+                            _assetData.description = value;
+                          },
+                        ),
                 ],
               ),
             ),
@@ -70,27 +129,63 @@ class DetailsScreen extends StatelessWidget {
             DetailsCard(
               title: 'Owner',
               icon: Icons.person_outline,
-              text: ' ${assetData.creator}',
+              text: ' ${widget.assetData.creator}',
             ),
             SizedBox(height: kFormElemetsGap / 2),
-            DetailsCard(
-              title: 'Group',
-              icon: Icons.group_outlined,
-              text:
-                  assetData.group.isEmpty ? 'Personal group' : assetData.group,
-            ),
+            !isEdited
+                ? DetailsCard(
+                    title: 'Group',
+                    icon: Icons.group_outlined,
+                    text: widget.assetData.group.isEmpty
+                        ? 'Personal group'
+                        : widget.assetData.group,
+                  )
+                : DetailsCard(
+                    title: 'Group',
+                    icon: Icons.group_outlined,
+                    child: DropdownButton(
+                      value: _assetData.group,
+                      onChanged: (value) {
+                        setState(() {
+                          _assetData.group = value!;
+                        });
+                      },
+                      items:
+                          groups.map<DropdownMenuItem<String>>((groupsTitle) {
+                        return DropdownMenuItem<String>(
+                          value: groupsTitle,
+                          child: Text(groupsTitle),
+                        );
+                      }).toList(),
+                    ),
+                  ),
             SizedBox(
               height: kFormElemetsGap / 2,
             ),
-            MarkeredMap(coordinates: assetData.coordinates),
+            MarkeredMap(coordinates: widget.assetData.coordinates),
             SizedBox(
               height: kFormElemetsGap / 2,
             ),
             DetailsCard(
               title: 'Last accessed',
               icon: Icons.schedule,
-              text: assetData.getTimeString(),
-            )
+              text: widget.assetData.getTimeString(),
+            ),
+            SizedBox(
+              height: kFormElemetsGap / 2,
+            ),
+            !isEdited
+                ? SizedBox(
+                    height: 1,
+                  )
+                : RectButton(
+                    text: "DELETE",
+                    onPressed: () {
+                      StorageManager().removeAsset(widget.assetData.id);
+                      Navigator.pop(context);
+                    },
+                    color: Colors.red.shade400,
+                  )
           ],
         ),
       ),
@@ -99,16 +194,18 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class DetailsCard extends StatelessWidget {
-  const DetailsCard({
+  DetailsCard({
     super.key,
     required this.title,
     required this.icon,
     this.text = '',
+    this.child = null,
   });
 
   final String title;
   final IconData icon;
   final String text;
+  late final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -131,10 +228,12 @@ class DetailsCard extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            text,
-            style: kTextStyleDefault,
-          ),
+          !text.isEmpty
+              ? Text(
+                  text,
+                  style: kTextStyleDefault,
+                )
+              : child!,
         ],
       ),
     );

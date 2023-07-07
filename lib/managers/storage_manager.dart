@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tool_track/data_models/asset_data.dart';
 import 'package:tool_track/constants.dart';
+import 'package:tool_track/data_models/group_data.dart';
 import 'package:tool_track/data_models/history_data.dart';
 import 'package:tool_track/managers/account_manager.dart';
 import 'package:tool_track/managers/location_manager.dart';
@@ -27,6 +28,16 @@ class StorageManager {
     return _firestore.collection(kFirestoreGroupsCollection).snapshots();
   }
 
+  Future<List> getGroups() async {
+    QuerySnapshot querySnapshot =
+        await _firestore.collection(kFirestoreGroupsCollection).get();
+    final List groups = querySnapshot.docs.map((doc) => doc.data()).toList();
+    List<String> groupTitles =
+        groups.map((group) => group['title'] as String).toList();
+    groupTitles.add('');
+    return groupTitles;
+  }
+
   Future newAsset({required AssetData assetData}) async {
     return await _firestore
         .collection(kFirestoreAssetsCollection)
@@ -34,11 +45,55 @@ class StorageManager {
   }
 
   Future newHistoryRecord({required HistoryData historyData}) async {
-    print('History data:');
-    print(historyData.toJson());
     return await _firestore
         .collection(kFirestoreHistoryCollection)
         .add(historyData.toJson());
+  }
+
+  Future newGroup({required GroupData groupData}) async {
+    return await _firestore
+        .collection(kFirestoreGroupsCollection)
+        .add(groupData.toJson());
+  }
+
+  Future removeGroup(String title) async {
+    try {
+      final post = await _firestore
+          .collection(kFirestoreGroupsCollection)
+          .where('title', isEqualTo: title)
+          .limit(1)
+          .get()
+          .then((QuerySnapshot snapshot) {
+        return snapshot.docs[0].reference;
+      });
+
+      var batch = _firestore.batch();
+      batch.delete(post);
+      batch.commit();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future removeAsset(String id) async {
+    try {
+      final post = await _firestore
+          .collection(kFirestoreAssetsCollection)
+          .where('id', isEqualTo: id)
+          .limit(1)
+          .get()
+          .then((QuerySnapshot snapshot) {
+        return snapshot.docs[0].reference;
+      });
+
+      var batch = _firestore.batch();
+      batch.delete(
+        post,
+      );
+      batch.commit();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void createHistoryRecord(String rfid) async {
